@@ -1,20 +1,9 @@
-use crate::error::ContractError;
-use crate::msg::InstantiateMsg;
-use cosmwasm_std::{Addr, DepsMut, Env, MessageInfo, StdResult, Storage};
+use cosmwasm_std::{Addr, StdResult, Storage};
 use cw_storage_plus::Item;
 
-pub const OWNER: Item<Addr> = Item::new("owner");
+pub const CW20_CODE_ID: u64 = 1;
 
-/// Initialize contract state data.
-pub fn initialize(
-  deps: DepsMut,
-  _env: &Env,
-  info: &MessageInfo,
-  _msg: &InstantiateMsg,
-) -> Result<(), ContractError> {
-  OWNER.save(deps.storage, &info.sender)?;
-  Ok(())
-}
+pub const OWNER: Item<Addr> = Item::new("owner");
 
 pub fn is_owner(
   storage: &dyn Storage,

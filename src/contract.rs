@@ -1,8 +1,7 @@
 use crate::error::ContractError;
 use crate::execute;
-use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg, MigrateMsg};
+use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
 use crate::query;
-use crate::state;
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response};
 use cw2::set_contract_version;
@@ -18,7 +17,7 @@ pub fn instantiate(
   msg: InstantiateMsg,
 ) -> Result<Response, ContractError> {
   set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
-  state::initialize(deps, &env, &info, &msg)?;
+
   Ok(Response::new().add_attribute("action", "instantiate"))
 }
 
@@ -30,9 +29,20 @@ pub fn execute(
   msg: ExecuteMsg,
 ) -> Result<Response, ContractError> {
   match msg {
-    ExecuteMsg::TransferOwnership { new_owner } => {
-      execute::transfer_ownership(deps, env, info, &new_owner)
-    },
+    ExecuteMsg::ReceiveNft {
+      sender,
+      token_id,
+      msg,
+    } => todo!(),
+    ExecuteMsg::CreateToken {
+      name,
+      symbol,
+      price,
+      supply,
+    } => todo!(),
+    ExecuteMsg::PlaceOrders { orders } => todo!(),
+    ExecuteMsg::CancelOrders { order_ids } => todo!(),
+    ExecuteMsg::WithdrawNfts { nft_ids, recipient } => todo!(),
   }
 }
 
